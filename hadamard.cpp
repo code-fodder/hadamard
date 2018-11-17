@@ -1,10 +1,11 @@
+#include <stdint.h>
 #include <cmath>
 #include "hadamard.h"
 
 void hadamard_utils::print_matrix(hadamard_matrix& matrix, const char * title)
 {
 	printf("%s\r\n", title);
-	printf("Dimensions - rows: %d, cols: %d\r\n", matrix.size(), matrix[0].size());
+	printf("Dimensions - rows: %zu, cols: %zu\r\n", matrix.size(), matrix[0].size());
 
 	int row = 1;
 	for(auto& line : matrix)
@@ -34,12 +35,12 @@ hadamard::hadamard(size_t hadamard_size) :
 	m_hadamard_dimension((size_t) pow(2, hadamard_size)),
 	m_matrix{{1}}
 {
-	printf("Generating Hadamard Matrix %d - dimension size: %dx%d\r\n",
+	printf("Generating Hadamard Matrix %zu - dimension size: %zux%zu\r\n",
 		m_hadamard_size, m_hadamard_dimension, m_hadamard_dimension);
 		
 	generate_matrix(m_matrix, m_hadamard_dimension);
 
-	printf("\r\nMatrix total size: %d\r\n", m_matrix.size() * m_matrix[0].size());
+	printf("\r\nMatrix total size: %zu\r\n", m_matrix.size() * m_matrix[0].size());
 	printf("\r\ndone\r\n");
 }
 
@@ -95,20 +96,20 @@ void hadamard::generate_matrix(hadamard_matrix& matrix, size_t size)
 // The result is a vector of 16-bit words set MSB first
 void hadamard::generate_code_words(size_t hadamard_size, size_t code_index)
 {
-	printf("\r\nGENERATING CODE WORD - H: %d, Index: %d\r\n",
+	printf("\r\nGENERATING CODE WORD - H: %zu, Index: %zu\r\n",
 		hadamard_size, code_index);
 
 	// Validity Checks
 	if (code_index >= m_matrix.size())
 	{
-		printf("code_index %d is invalid, the matrix has %d codes: %d to %d\r\n",
+		printf("code_index %zu is invalid, the matrix has %zu codes: %d to %zu\r\n",
 			code_index, m_hadamard_dimension, 0, m_hadamard_dimension - 1);
 		return;
 	}
 
 	if (hadamard_size > m_hadamard_size)
 	{
-		printf("hadamard_size %d is invalid, the matrix hadamard_size is %d\r\n",
+		printf("hadamard_size %zu is invalid, the matrix hadamard_size is %zu\r\n",
 			hadamard_size, m_hadamard_size);
 		return;
 	}
@@ -116,7 +117,7 @@ void hadamard::generate_code_words(size_t hadamard_size, size_t code_index)
 	size_t code_size = (size_t) pow(2, hadamard_size);
 	if (code_index >= code_size)
 	{
-		printf("code_index %d is greater then the table with hardamard_size %d, valid codes: %d to %d\r\n",
+		printf("code_index %zu is greater then the table with hardamard_size %zu, valid codes: %d to %zu\r\n",
 			code_index, hadamard_size, 0, code_size - 1);
 		return;
 	}	
